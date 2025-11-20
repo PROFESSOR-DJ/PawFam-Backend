@@ -522,7 +522,60 @@ if (req.user.role !== 'vendor') {
 
 ---
 
-## Email Service Configuration
+### Email Service (`services/emailService.js`)
+
+**Purpose**: Handles all email communications with professional PawFam branding
+
+**Features**:
+- Multi-provider support (Ethereal, Gmail, Outlook)
+- Automatic test account creation for Ethereal
+- Branded HTML email templates
+- Preview URL generation for testing
+- Error handling and logging
+
+**Email Functions**:
+
+```javascript
+// Send OTP for password reset
+sendOTPEmail(email, otp, username)
+// Professional template with:
+// - PawFam branding header
+// - Large blue gradient OTP display
+// - 10-minute expiry notification
+// - Security warnings
+
+// Send password reset confirmation
+sendPasswordResetConfirmation(email, username)
+// Confirmation template with:
+// - Success checkmark icon
+// - Security tips in blue box
+// - Unauthorized change warning
+// - Professional footer
+
+// Send password (legacy/backup)
+sendPasswordEmail(email, password, username)
+// Recovery template with:
+// - Secure password display
+// - Security recommendations
+// - Change password reminder
+```
+
+**Transporter Configuration**:
+```javascript
+// Automatic transporter selection based on EMAIL_SERVICE
+// Ethereal (default): Auto-creates test account
+// Gmail: Uses App Password authentication
+// Outlook: SMTP configuration for Outlook.com
+```
+
+**Template Design**:
+- Consistent PawFam branding with tagline "Short Stay, Big Love"
+- Modern blue color scheme (#1e40af, #3b82f6, #2563eb)
+- Responsive design with max-width 600px
+- Professional Inter/Arial font stack
+- Clear visual hierarchy
+- Security-focused messaging
+- Mobile-optimized layouts
 
 ### OTP Email Flow
 1. User requests password reset
@@ -553,11 +606,40 @@ MONGODB_URI=mongodb://localhost:27017/pawfam
 # Authentication
 JWT_SECRET=your_jwt_secret_key_here
 
-# Email Service
+# Email Service Configuration
 EMAIL_SERVICE=ethereal  # Options: ethereal, gmail, outlook
-EMAIL_USER=your_email@gmail.com  # For Gmail/Outlook
-EMAIL_PASSWORD=your_app_password  # App-specific password
+
+# Gmail Configuration (if using gmail)
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_16_char_app_password  # Generate from Google Account Security
+
+# Outlook Configuration (if using outlook)
+EMAIL_USER=your_email@outlook.com
+EMAIL_PASSWORD=your_outlook_password
+
+# Ethereal (default for testing - no configuration needed)
+# Preview URLs automatically generated in console
 ```
+
+### Email Service Setup
+
+**Ethereal Email (Testing - Default)**
+- No configuration required
+- Automatically creates test accounts
+- Provides preview URLs in console
+- Perfect for development
+
+**Gmail Setup**
+1. Enable 2-Factor Authentication in Google Account
+2. Go to Security → App Passwords
+3. Generate new app password for "Mail"
+4. Use 16-character password in EMAIL_PASSWORD
+5. Set EMAIL_SERVICE=gmail
+
+**Outlook/Hotmail Setup**
+1. Use your Outlook email and password
+2. Set EMAIL_SERVICE=outlook
+3. Ensure "Less secure app access" is enabled if required
 
 ---
 
@@ -784,8 +866,33 @@ echo $MONGODB_URI
 **Email Not Sending**
 ```bash
 # Check email service configuration
-# For Gmail, enable 2FA and use App Password
-# For testing, use Ethereal Email (default)
+echo $EMAIL_SERVICE  # Should be: ethereal, gmail, or outlook
+
+# For Ethereal (default)
+# No configuration needed - check console for preview URL
+# Example output: 🔗 Preview URL: https://ethereal.email/message/xxxxx
+
+# For Gmail
+# Ensure 2FA is enabled
+# Generate App Password from Google Account Security
+# Use 16-character app password (not regular password)
+# Format: xxxx xxxx xxxx xxxx (no spaces in .env)
+
+# For Outlook
+# Check credentials are correct
+# Some Outlook accounts may require "App Password"
+
+# Test email sending manually
+# Look for console output:
+# ✅ OTP email sent successfully!
+# 📧 Message ID: <message-id>
+# 🔗 Preview URL: <link> (for Ethereal only)
+
+# Common issues:
+# 1. Wrong EMAIL_SERVICE value
+# 2. App Password not generated (Gmail)
+# 3. Special characters in password not escaped
+# 4. 2FA not enabled (Gmail requirement)
 ```
 
 **Port Already in Use**
@@ -846,9 +953,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - `mongoose` - MongoDB ODM
 - `jsonwebtoken` - JWT implementation
 - `bcryptjs` - Password hashing
-- `nodemailer` - Email service
+- `nodemailer` - Email service with multi-provider support
 - `cors` - CORS middleware
 - `dotenv` - Environment configuration
+
+### Email Service Resources
+- [Nodemailer Documentation](https://nodemailer.com/)
+- [Ethereal Email Testing](https://ethereal.email/) - Free email testing service
+- [Gmail App Passwords Guide](https://support.google.com/accounts/answer/185833)
+- [Email Template Best Practices](https://www.campaignmonitor.com/email-templates/)
+- [HTML Email Design](https://www.emailonacid.com/blog/)
 
 ---
 
@@ -869,10 +983,11 @@ The platform successfully bridges the gap between pet owners and service provide
 - 🔐 Secure dual-role authentication system
 - 📊 Comprehensive CRUD operations across all modules
 - 🔍 Advanced search and filtering capabilities
-- 📧 Professional email notification system
+- 📧 Professional multi-provider email notification system with branded templates
 - 🏗️ Scalable MongoDB schema design
 - 📝 Complete API documentation
 - 🛡️ Production-ready security measures
+- 🎨 Consistent PawFam branding across all communications
 
 **PawFam**: Connecting pets with love and care, one API call at a time! 🐾
 
