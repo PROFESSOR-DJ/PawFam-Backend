@@ -522,60 +522,31 @@ if (req.user.role !== 'vendor') {
 
 ---
 
-### Email Service (`services/emailService.js`)
+### UML Diagram
 
-**Purpose**: Handles all email communications with professional PawFam branding
+**Component Diagram**
+<img width="940" height="1209" alt="image" src="https://github.com/user-attachments/assets/aa58eac0-1558-4dc2-8acb-e79bc98e422f" />
 
-**Features**:
-- Multi-provider support (Ethereal, Gmail, Outlook)
-- Automatic test account creation for Ethereal
-- Branded HTML email templates
-- Preview URL generation for testing
-- Error handling and logging
+**Order Sequence (When Customer Places Order)**
+<img width="940" height="940" alt="image" src="https://github.com/user-attachments/assets/be7c87e4-8de4-419b-8a11-d61e77e093b2" />
 
-**Email Functions**:
+**Class Diagram**
+<img width="940" height="1175" alt="image" src="https://github.com/user-attachments/assets/5d6c92c5-a8e3-4146-8406-85ada29e3ad5" />
 
-```javascript
-// Send OTP for password reset
-sendOTPEmail(email, otp, username)
-// Professional template with:
-// - PawFam branding header
-// - Large blue gradient OTP display
-// - 10-minute expiry notification
-// - Security warnings
+**Vendor Daycare Management (Sequence Diagram)**
+<img width="940" height="705" alt="image" src="https://github.com/user-attachments/assets/c2e52851-856d-4b3d-b476-a4aab6712626" />
 
-// Send password reset confirmation
-sendPasswordResetConfirmation(email, username)
-// Confirmation template with:
-// - Success checkmark icon
-// - Security tips in blue box
-// - Unauthorized change warning
-// - Professional footer
+**System Diagram**
+<img width="940" height="1097" alt="image" src="https://github.com/user-attachments/assets/cc8ea668-bdb8-40e5-aad8-698b0ee81644" />
 
-// Send password (legacy/backup)
-sendPasswordEmail(email, password, username)
-// Recovery template with:
-// - Secure password display
-// - Security recommendations
-// - Change password reminder
-```
+**Customer Daycare Booking (Sequence Diagram)**
+<img width="940" height="823" alt="image" src="https://github.com/user-attachments/assets/bca253c7-6e04-4f31-b8e0-4018cfdf5e11" />
 
-**Transporter Configuration**:
-```javascript
-// Automatic transporter selection based on EMAIL_SERVICE
-// Ethereal (default): Auto-creates test account
-// Gmail: Uses App Password authentication
-// Outlook: SMTP configuration for Outlook.com
-```
+**Deployment Diagram**
+<img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/7143ede3-814b-41fa-8c12-7abf8cb1379d" />
 
-**Template Design**:
-- Consistent PawFam branding with tagline "Short Stay, Big Love"
-- Modern blue color scheme (#1e40af, #3b82f6, #2563eb)
-- Responsive design with max-width 600px
-- Professional Inter/Arial font stack
-- Clear visual hierarchy
-- Security-focused messaging
-- Mobile-optimized layouts
+**Activity Diagram**
+<img width="940" height="1315" alt="image" src="https://github.com/user-attachments/assets/f50c7271-6d78-4749-8887-1ec4089aad0a" />
 
 ### OTP Email Flow
 1. User requests password reset
@@ -585,63 +556,6 @@ sendPasswordEmail(email, password, username)
 5. User verifies OTP
 6. User sets new password
 7. Send confirmation email
-
-### Email Templates
-- **OTP Email**: Gradient background with large OTP display
-- **Confirmation Email**: Success checkmark with security tips
-- **Testing**: Ethereal Email generates preview URLs
-
----
-
-## Environment Variables
-
-```env
-# Server Configuration
-PORT=5000
-NODE_ENV=development
-
-# Database
-MONGODB_URI=mongodb://localhost:27017/pawfam
-
-# Authentication
-JWT_SECRET=your_jwt_secret_key_here
-
-# Email Service Configuration
-EMAIL_SERVICE=ethereal  # Options: ethereal, gmail, outlook
-
-# Gmail Configuration (if using gmail)
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASSWORD=your_16_char_app_password  # Generate from Google Account Security
-
-# Outlook Configuration (if using outlook)
-EMAIL_USER=your_email@outlook.com
-EMAIL_PASSWORD=your_outlook_password
-
-# Ethereal (default for testing - no configuration needed)
-# Preview URLs automatically generated in console
-```
-
-### Email Service Setup
-
-**Ethereal Email (Testing - Default)**
-- No configuration required
-- Automatically creates test accounts
-- Provides preview URLs in console
-- Perfect for development
-
-**Gmail Setup**
-1. Enable 2-Factor Authentication in Google Account
-2. Go to Security → App Passwords
-3. Generate new app password for "Mail"
-4. Use 16-character password in EMAIL_PASSWORD
-5. Set EMAIL_SERVICE=gmail
-
-**Outlook/Hotmail Setup**
-1. Use your Outlook email and password
-2. Set EMAIL_SERVICE=outlook
-3. Ensure "Less secure app access" is enabled if required
-
----
 
 ## Installation & Setup
 
@@ -665,7 +579,7 @@ npm install
 
 3. **Configure environment variables**
 ```bash
-cp .env.example .env
+cp .env
 # Edit .env with your configuration
 ```
 
@@ -674,8 +588,6 @@ cp .env.example .env
 # Using MongoDB service
 sudo service mongod start
 
-# Or using Docker
-docker run -d -p 27017:27017 --name mongodb mongo:latest
 ```
 
 5. **Run the application**
@@ -683,43 +595,7 @@ docker run -d -p 27017:27017 --name mongodb mongo:latest
 # Development mode
 npm run dev
 
-# Production mode
-npm start
 ```
-
-6. **Verify installation**
-```bash
-curl http://localhost:5000/api/health
-```
-
----
-
-## API Testing
-
-### Using cURL
-
-```bash
-# Register customer
-curl -X POST http://localhost:5000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"username":"john_doe","email":"john@example.com","password":"password123"}'
-
-# Login
-curl -X POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"john@example.com","password":"password123"}'
-
-# Access protected route
-curl -X GET http://localhost:5000/api/profile \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-### Using Postman
-
-1. Import the API collection
-2. Set environment variable: `token`
-3. Use `{{token}}` in Authorization headers
-4. Test all endpoints with sample data
 
 ---
 
@@ -843,96 +719,6 @@ if (req.user.role !== 'vendor') {
 
 ---
 
-## Troubleshooting
-
-### Common Issues
-
-**MongoDB Connection Failed**
-```bash
-# Check MongoDB status
-sudo service mongod status
-
-# Verify connection string
-echo $MONGODB_URI
-```
-
-**JWT Token Invalid**
-```bash
-# Check token expiry
-# Ensure JWT_SECRET matches across requests
-# Verify token format: "Bearer <token>"
-```
-
-**Email Not Sending**
-```bash
-# Check email service configuration
-echo $EMAIL_SERVICE  # Should be: ethereal, gmail, or outlook
-
-# For Ethereal (default)
-# No configuration needed - check console for preview URL
-# Example output: 🔗 Preview URL: https://ethereal.email/message/xxxxx
-
-# For Gmail
-# Ensure 2FA is enabled
-# Generate App Password from Google Account Security
-# Use 16-character app password (not regular password)
-# Format: xxxx xxxx xxxx xxxx (no spaces in .env)
-
-# For Outlook
-# Check credentials are correct
-# Some Outlook accounts may require "App Password"
-
-# Test email sending manually
-# Look for console output:
-# ✅ OTP email sent successfully!
-# 📧 Message ID: <message-id>
-# 🔗 Preview URL: <link> (for Ethereal only)
-
-# Common issues:
-# 1. Wrong EMAIL_SERVICE value
-# 2. App Password not generated (Gmail)
-# 3. Special characters in password not escaped
-# 4. 2FA not enabled (Gmail requirement)
-```
-
-**Port Already in Use**
-```bash
-# Find process using port 5000
-lsof -i :5000
-
-# Kill process
-kill -9 <PID>
-```
-
----
-
-## Contributing Guidelines
-
-### Code Style
-- Use ES6+ syntax
-- Follow camelCase naming
-- Add comments for complex logic
-- Maintain consistent indentation
-
-### Commit Messages
-- Use descriptive commit messages
-- Format: `[Module] Action - Description`
-- Example: `[Auth] Add OTP verification endpoint`
-
-### Pull Requests
-- Create feature branches
-- Write clear PR descriptions
-- Update documentation
-- Add tests for new features
-
----
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
 ## References
 
 ### Documentation
@@ -943,10 +729,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Nodemailer Documentation](https://nodemailer.com/)
 
 ### Tutorials & Resources
-- [RESTful API Design Best Practices](https://restfulapi.net/)
 - [MongoDB Schema Design Patterns](https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design)
-- [JWT Authentication Guide](https://jwt.io/introduction)
-- [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
 
 ### Libraries Used
 - `express` - Web framework
@@ -957,37 +740,30 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - `cors` - CORS middleware
 - `dotenv` - Environment configuration
 
-### Email Service Resources
-- [Nodemailer Documentation](https://nodemailer.com/)
-- [Ethereal Email Testing](https://ethereal.email/) - Free email testing service
-- [Gmail App Passwords Guide](https://support.google.com/accounts/answer/185833)
-- [Email Template Best Practices](https://www.campaignmonitor.com/email-templates/)
-- [HTML Email Design](https://www.emailonacid.com/blog/)
-
 ---
 
 ## Conclusion
 
 PawFam Backend is a comprehensive, production-ready API that demonstrates modern web development practices including:
 
-✅ **Robust Architecture**: Modular design with clear separation of concerns  
-✅ **Security First**: JWT authentication, password hashing, role-based access  
-✅ **Scalable Design**: MongoDB indexing, efficient queries, optimized schemas  
-✅ **User Experience**: Email notifications, OTP verification, detailed error messages  
-✅ **Vendor Support**: Complete business management capabilities  
-✅ **Code Quality**: Consistent patterns, error handling, validation
+**Robust Architecture**: Modular design with clear separation of concerns  
+**Security First**: JWT authentication, password hashing, role-based access  
+**Scalable Design**: MongoDB indexing, efficient queries, optimized schemas  
+**User Experience**: Email notifications, OTP verification, detailed error messages  
+**Vendor Support**: Complete business management capabilities  
+**Code Quality**: Consistent patterns, error handling, validation
 
 The platform successfully bridges the gap between pet owners and service providers, offering a seamless experience for adoption, daycare, and shopping needs. With its extensible architecture and well-documented codebase, PawFam is positioned for future growth and feature additions.
 
 ### Key Achievements
-- 🔐 Secure dual-role authentication system
-- 📊 Comprehensive CRUD operations across all modules
-- 🔍 Advanced search and filtering capabilities
-- 📧 Professional multi-provider email notification system with branded templates
-- 🏗️ Scalable MongoDB schema design
-- 📝 Complete API documentation
-- 🛡️ Production-ready security measures
-- 🎨 Consistent PawFam branding across all communications
+- Secure dual-role authentication system
+- Comprehensive CRUD operations across all modules
+- Advanced search and filtering capabilities
+- Professional multi-provider email notification system with branded templates
+- Scalable MongoDB schema design
+- Complete API documentation
+- Production-ready security measures
+- Consistent PawFam branding across all communications
 
 **PawFam**: Connecting pets with love and care, one API call at a time! 🐾
 
@@ -996,12 +772,9 @@ The platform successfully bridges the gap between pet owners and service provide
 ## Contact & Support
 
 For questions, issues, or contributions:
-- Email: support@pawfam.com
-- GitHub Issues: [Create an issue]
-- Documentation: [API Docs]
+- Email: dhiraajph@gmail.com
+- LinkedIn: [DHIRAAJ K V](https://www.linkedin.com/in/dhiraajkv)
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: November 2024  
 **Maintained By**: PawFam Development Team
