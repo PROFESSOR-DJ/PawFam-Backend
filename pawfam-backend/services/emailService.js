@@ -66,27 +66,28 @@ const sendOTPEmail = async (email, otp, username = 'User') => {
         const mailOptions = {
             from: `"PawFam" <noreply@pawfam.com>`,
             to: email,
-            subject: '🔐 PawFam - Password Reset OTP',
+            subject: 'PawFam - Password Reset OTP',
             html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px;">
+        <div style="font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px;">
           <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             <div style="text-align: center; margin-bottom: 20px;">
-              <h1 style="color: #1e40af; margin: 0;">🐾 PawFam</h1>
+              <h1 style="color: #1e40af; margin: 0; font-size: 2rem;">PawFam</h1>
+              <p style="color: #3b82f6; margin: 5px 0 0 0; font-size: 0.9rem;">Short Stay, Big Love</p>
             </div>
             
-            <h2 style="color: #1e40af; margin-bottom: 10px;">Password Reset Request</h2>
+            <h2 style="color: #1e40af; margin-bottom: 10px; font-size: 1.5rem;">Password Reset Request</h2>
             <p style="color: #4b5563; font-size: 16px;">Hello ${username},</p>
             <p style="color: #4b5563; font-size: 16px;">
               We received a request to reset your password. Please use the following OTP to verify your identity:
             </p>
             
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
+            <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
               <h1 style="color: white; letter-spacing: 12px; margin: 0; font-size: 36px; font-weight: bold;">${otp}</h1>
             </div>
             
-            <div style="background-color: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
-              <p style="margin: 0; color: #92400e; font-size: 14px;">
-                ⚠️ <strong>Important:</strong> This OTP will expire in 10 minutes.
+            <div style="background-color: #dbeafe; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; margin: 20px 0;">
+              <p style="margin: 0; color: #1e40af; font-size: 14px;">
+                <strong>Important:</strong> This OTP will expire in 10 minutes.
               </p>
             </div>
             
@@ -132,21 +133,22 @@ const sendPasswordResetConfirmation = async (email, username = 'User') => {
         const mailOptions = {
             from: `"PawFam" <noreply@pawfam.com>`,
             to: email,
-            subject: '✅ PawFam - Password Reset Successful',
+            subject: 'PawFam - Password Reset Successful',
             html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px;">
+        <div style="font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px;">
           <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             <div style="text-align: center; margin-bottom: 20px;">
-              <h1 style="color: #1e40af; margin: 0;">🐾 PawFam</h1>
+              <h1 style="color: #1e40af; margin: 0; font-size: 2rem;">PawFam</h1>
+              <p style="color: #3b82f6; margin: 5px 0 0 0; font-size: 0.9rem;">Short Stay, Big Love</p>
             </div>
             
             <div style="text-align: center; margin-bottom: 20px;">
-              <div style="background-color: #d1fae5; width: 80px; height: 80px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-                <span style="color: #059669; font-size: 48px;">✓</span>
+              <div style="background-color: #dbeafe; width: 80px; height: 80px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                <span style="color: #3b82f6; font-size: 48px; font-weight: bold;">✓</span>
               </div>
             </div>
             
-            <h2 style="color: #059669; text-align: center; margin-bottom: 10px;">Password Reset Successful!</h2>
+            <h2 style="color: #1e40af; text-align: center; margin-bottom: 10px; font-size: 1.5rem;">Password Reset Successful</h2>
             <p style="color: #4b5563; font-size: 16px;">Hello ${username},</p>
             <p style="color: #4b5563; font-size: 16px;">
               Your password has been successfully reset. You can now login to your PawFam account using your new password.
@@ -154,13 +156,13 @@ const sendPasswordResetConfirmation = async (email, username = 'User') => {
             
             <div style="background-color: #dbeafe; padding: 15px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0; color: #1e40af; font-size: 14px;">
-                🔒 <strong>Security Tip:</strong> Keep your password secure and never share it with anyone.
+                <strong>Security Tip:</strong> Keep your password secure and never share it with anyone.
               </p>
             </div>
             
             <div style="background-color: #fee2e2; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444; margin: 20px 0;">
               <p style="margin: 0; color: #991b1b; font-size: 14px;">
-                ⚠️ If you did not make this change, please contact support immediately.
+                <strong>Important:</strong> If you did not make this change, please contact support immediately.
               </p>
             </div>
             
@@ -202,24 +204,47 @@ const sendPasswordEmail = async (email, password, username) => {
             to: email,
             subject: 'PawFam - Your Password',
             html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1e40af;">PawFam Password Recovery</h2>
-          <p>Hello ${username},</p>
-          <p>Your password has been successfully verified. Here is your password:</p>
-          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin: 0;"><strong>Password:</strong> ${password}</p>
+        <div style="font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background-color: #f9fafb; border-radius: 10px;">
+          <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <h1 style="color: #1e40af; margin: 0; font-size: 2rem;">PawFam</h1>
+              <p style="color: #3b82f6; margin: 5px 0 0 0; font-size: 0.9rem;">Short Stay, Big Love</p>
+            </div>
+            
+            <h2 style="color: #1e40af; margin-bottom: 10px; font-size: 1.5rem;">Password Recovery</h2>
+            <p style="color: #4b5563; font-size: 16px;">Hello ${username},</p>
+            <p style="color: #4b5563; font-size: 16px;">
+              Your password has been successfully verified. Here is your password:
+            </p>
+            
+            <div style="background-color: #dbeafe; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+              <p style="margin: 0; color: #1e40af; font-size: 16px;"><strong>Password:</strong> ${password}</p>
+            </div>
+            
+            <div style="background-color: #fee2e2; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444; margin: 20px 0;">
+              <p style="margin: 0 0 10px 0; color: #991b1b; font-size: 14px; font-weight: bold;">
+                Important Security Notice
+              </p>
+              <ul style="color: #991b1b; font-size: 14px; margin: 0; padding-left: 20px;">
+                <li>Change your password immediately after logging in</li>
+                <li>Never share your password with anyone</li>
+                <li>Use a strong, unique password for your account</li>
+              </ul>
+            </div>
+            
+            <p style="color: #4b5563; font-size: 16px;">
+              You can now log in to your account using this password.
+            </p>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+              <p style="color: #6b7280; font-size: 12px; margin: 5px 0;">
+                This is an automated email from PawFam. Please do not reply to this email.
+              </p>
+              <p style="color: #6b7280; font-size: 12px; margin: 5px 0;">
+                © 2025 PawFam. All rights reserved.
+              </p>
+            </div>
           </div>
-          <p style="color: #ef4444;"><strong>Important Security Notice:</strong></p>
-          <ul style="color: #6b7280;">
-            <li>We recommend changing your password immediately after logging in</li>
-            <li>Never share your password with anyone</li>
-            <li>Use a strong, unique password for your account</li>
-          </ul>
-          <p>You can now log in to your account using this password.</p>
-          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
-          <p style="color: #6b7280; font-size: 12px;">
-            This is an automated email from PawFam. Please do not reply to this email.
-          </p>
         </div>
       `
         };
